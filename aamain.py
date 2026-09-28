@@ -25,10 +25,12 @@ rlog = c_run_log()
 
 sola = c_sola()
 sola.set_run_mode(cc.run_mode)
+sola.set_port(cc.port_sola)
 sola.init_serial()
 
 stage = c_stage()
 stage.set_run_mode(cc.run_mode)
+stage.set_port(cc.port_stage)
 stage.init_serial()
 
 camera = c_camera()
