@@ -316,10 +316,32 @@ class c_chanset:
     ou += '\n'
     for i in range(n_rchan):
       ii = order[i]
-      ou += self.chan[ii].gou_1a()
+      ou += self.chan[ii].gou_1b()
     ou += '\n'
     #
     fz=open(fzname,'w');
     fz.write(ou);  fz.close();
+    #
+  def save_channels_1c(self, fzname):
+    # Saves stage coords.
+    order = self.chan_order
+    n_rchan = self.n_rchan
+    #
+    ou = ''
+    ou += '#\n'
+    ou += '\n'
+    ou += '# Units:  stage units.\n'
+    ou += '# Only running channels are listed.\n'
+    ou += '# Channels listed in run order.\n'
+    #
+    ou += '\n'
+    for i in range(n_rchan):
+      ii = order[i]
+      ou += self.chan[ii].gou_1c()
+    ou += '\n'
+    #
+    fz=open(fzname,'w');
+    fz.write(ou);  fz.close();
+    #
 
 

@@ -98,6 +98,7 @@ chanset.pro1()  # Is this right?
 # Save new edges after reset edges.
 chanset.save_channels_1a('z2a_chanset.data')
 chanset.save_channels_1b('z2b_chanset.data')
+chanset.save_channels_1c('z2c_chanset_stage.data')
 
 chanset.check_in_stage_limits()
 # Exits with error if some points are

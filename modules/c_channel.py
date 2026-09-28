@@ -195,7 +195,7 @@ class c_channel:
     print()
     return imi
     #
-  def gou_1a(self):
+  def gou_1b(self):
     ou = ''
     ou += '\n'
     ou += '# ________________________\n'
@@ -203,6 +203,7 @@ class c_channel:
     ou += '!order_i ; '+str(self.order_i)+'\n'
     ou += '!chani   ; '+str(self.chani)+'\n'
     ou += '!n_im    ; '+str(self.n_im)+'\n'
+    ou += '!ims\n'
     ou += '# imi ; L         ; x         ; y         ; z\n'
     for i in range(self.n_im):
       x = self.im_pos_x[i];
@@ -216,6 +217,38 @@ class c_channel:
       ou += ' ; {:9.4f}'.format( z )
       ou += '\n'
     return ou
+    #
+  def gou_1c(self):
+    # Save stage coords.
+    coords = self.stage.get_stage_coords
+    in_lims = self.stage.is_in_limits_xyz
+    #
+    ou = ''
+    ou += '\n'
+    ou += '# ________________________\n'
+    ou += '!channel\n'
+    ou += '!order_i ; '+str(self.order_i)+'\n'
+    ou += '!chani   ; '+str(self.chani)+'\n'
+    ou += '!n_im    ; '+str(self.n_im)+'\n'
+    ou += '!ims\n'
+    ou += '# imi ; L         ; x         ; y         ; z         ; in limits\n'
+    for i in range(self.n_im):
+      ux = self.im_pos_x[i];
+      uy = self.im_pos_y[i];
+      uz = self.im_pos_z[i];
+      x,y,z = coords(ux,uy,uz)
+      inlim = '.'
+      if not in_lims(x,y,z): inlim = 'x'
+      L = i + self.dL_step;
+      ou += '{:5d}'.format( i )
+      ou += ' ; {:9.4f}'.format( L )
+      ou += ' ; {:9.1f}'.format( x )
+      ou += ' ; {:9.1f}'.format( y )
+      ou += ' ; {:9.1f}'.format( z )
+      ou += ' ; '+inlim
+      ou += '\n'
+    return ou
+    #
 
 
 
