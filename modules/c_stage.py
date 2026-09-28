@@ -54,6 +54,10 @@ class c_stage:
     if z < self.stage_limit_z_lo:  return False
     if z > self.stage_limit_z_hi:  return False
     return True
+  def is_in_limits_xy(self,x,y):
+    if not self.is_in_limits_x(x):  return False
+    if not self.is_in_limits_y(y):  return False
+    return True
   def is_in_limits_xyz(self,x,y,z):
     if not self.is_in_limits_x(x):  return False
     if not self.is_in_limits_y(y):  return False
@@ -140,6 +144,11 @@ class c_stage:
     sx,sy,sz = self.get_stage_coords(ux,uy,uz)
     self.go_stage_xyz(sx, sy, sz)
   def go_stage_xyz(self, x,y,z):
+    if not self.is_in_limits_xyz(x,y,z):
+      print("Error.  Outside stage limits.")
+      print("  file:  c_stage.py")
+      print("  func:  go_stage_xyz().")
+      sys.exit(1)
     if self.run_mode != 'serial':
       # print("c_stage:  Simulated stage_xyz().")
       return
@@ -167,6 +176,11 @@ class c_stage:
     sx,sy,sz = self.get_stage_coords(ux,uy,0)
     self.go_stage_xy(sx, sy)
   def go_stage_xy(self, x,y):
+    if not self.is_in_limits_xy(x,y):
+      print("Error.  Outside stage limits.")
+      print("  file:  c_stage.py")
+      print("  func:  go_stage_xy().")
+      sys.exit(1)
     if self.run_mode != 'serial':
       # print("c_stage:  Simulated go_p3().")
       return
