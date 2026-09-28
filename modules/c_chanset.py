@@ -15,6 +15,10 @@ class c_chanset:
   def __init__(self):
     pass
     #
+  def set_stage(self, stage):
+    self.stage = stage
+  def set_run_mode(self, run_mode):
+    self.run_mode = run_mode
   def set_chan_order(self, chan_order):
     self.chan_order = chan_order
     self.n_rchan = len(chan_order)
@@ -33,6 +37,8 @@ class c_chanset:
           self.fread_point_sequence(f)
       elif key=='!camera_subarray':
           self.fread_camera_subarray(f)
+      elif key=='!fidu':
+        self.fread_fidu(f)
       elif key=='!specs':
         # Ignore specs.
         for l in f:
@@ -46,6 +52,28 @@ class c_chanset:
         sys.exit(1)
       #
     f.close()
+    #
+  def fread_fidu(self, f):
+    self.fidu_name = []
+    self.fidu_x = []
+    self.fidu_y = []
+    self.fidu_z = []
+    for l in f:
+      l = l.strip()
+      if len(l) == 0:  break
+      if l[0] == '#':  continue
+      mm = [m.strip() for m in l.split(';')]
+      self.fidu_name.append( mm[0] )
+      self.fidu_x.append( float(mm[1]) )
+      self.fidu_y.append( float(mm[2]) )
+      self.fidu_z.append( float(mm[3]) )
+    #
+    self.n_fidu = len(self.fidu_name)
+    #
+  def set_run_mode_in_channels(self):
+    run_mode = self.run_mode
+    for i in range(self.n_chan):
+      self.chan[i].set_run_mode(run_mode)
     #
   def pro1(self):
     for i in range(self.n_chan):
@@ -85,7 +113,7 @@ class c_chanset:
       if len(l) == 0:  break
       if l[0] == '#':  continue
       mm = [m.strip() for m in l.split(';')]
-      m_sta   = float(mm[0]);
+      m_start = float(mm[0]);
       m_end   = float(mm[1]);
       dL_step = float(mm[2]);
       uchans = parse_ints(mm[3])
@@ -96,18 +124,18 @@ class c_chanset:
           print("  file:  c_chanset.py.")
           print("  func:  fread_point_sequence().")
           sys.exit(1)
-        if self.chan[uc].m_sta != None:
+        if self.chan[uc].m_start != None:
           print("Error.  Duplicate assignment.")
           print("  uc: ", uc)
           print("  file:  c_chanset.py.")
           print("  func:  fread_point_sequence().")
           sys.exit(1)
-        self.chan[uc].set_m_sta(   m_sta   )
-        self.chan[uc].set_m_end(   m_end   )
-        self.chan[uc].set_dL_step( dL_step )
+        self.chan[uc].set_m_start( m_start   )
+        self.chan[uc].set_m_end(   m_end     )
+        self.chan[uc].set_dL_step( dL_step   )
     #
     for i in range(self.n_chan):
-      if self.chan[i].m_sta == None:
+      if self.chan[i].m_start == None:
         print("Error.")
         print("  - A channel is missing")
         print("    the point sequence.")
@@ -154,10 +182,37 @@ class c_chanset:
         print("  func:  fread_camera_subarray().")
         sys.exit(1)
     #
+    #
+  def reset_user_origin_with_fidu0(self):
+    # That is, set where in stage coordinates
+    # the user origin is located.
+    f0x = self.fidu_x[0]
+    f0y = self.fidu_y[0]
+    self.stage.go_user_xy(f0x,f0y);
+    print("Resetting location of user origin")
+    print("  in stage coordinate system")
+    print("  using fiducial point 0.")
+    print("  Adjust position of fidu[0],")
+    print("  then hit enter.")
+    uin = input("  >> ")
+    # Don't bother checking.
+    sx,sy,sz = self.stage.sread_stage_xyz()
+    if self.run_mode != 'serial':  return
+    self.stage.set_user_o_sx( sx )
+    self.stage.set_user_o_sy( sy )
+    self.stage.set_user_o_sz( sz )
+    #
   def reset_edges(self):
     order = self.chan_order
     n_rchan = self.n_rchan
     ok = True
+    #
+    # First reset user origin using fidu[0].
+    # Using only fidu[0] for now.
+    self.reset_user_origin_with_fidu0()
+    #
+    print("Reset capillary ends for each")
+    print("  capillary that will be used.")
     for i in range(n_rchan):
       ii = order[i]
       rv = self.chan[ii].reset_edges()
@@ -166,7 +221,6 @@ class c_chanset:
         break
     if ok:  return 0
     return 1
-    # jjj JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
     #
   def save_channels_1a(self, fzname):
     ou = ''
@@ -190,13 +244,13 @@ class c_chanset:
     #
     ou += '\n'
     ou += '!point_sequence\n'
-    ou += '# m_sta ; m_end  ; dL_step ; channels\n'
+    ou += '# m_start ; m_end  ; dL_step ; channels\n'
     for i in range(self.n_chan):
-      m_sta   = self.chan[i].m_sta
+      m_start   = self.chan[i].m_start
       m_end   = self.chan[i].m_end
       dL_step = self.chan[i].dL_step
       #
-      ou += '{:7.1f}'.format(m_sta)
+      ou += '{:7.1f}'.format(m_start)
       ou += ' ; {:6.1f}'.format(m_end)
       ou += ' ; {:7.3f}'.format(dL_step)
       ou += ' ; {:6d}'.format(i)
@@ -225,7 +279,7 @@ class c_chanset:
     ou += '!specs\n'
     ou += '# chani ; n_im ; Len_sweep\n'
     for i in range(self.n_chan):
-      m_sta     = self.chan[i].m_sta
+      m_start     = self.chan[i].m_start
       m_end     = self.chan[i].m_end
       dL_step   = self.chan[i].dL_step
       n_im      = self.chan[i].n_im

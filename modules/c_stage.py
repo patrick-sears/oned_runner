@@ -12,6 +12,48 @@ class c_stage:
     self.run_mode = run_mode
   def set_port(self, port):
     self.port = port
+  def set_stage_units_per_mm(self, stage_units_per_mm):
+    self.stage_units_per_mm = stage_units_per_mm
+  def set_stage_center_x(self, stage_center_x):
+    self.stage_center_x = stage_center_x
+  def set_stage_center_y(self, stage_center_y):
+    self.stage_center_y = stage_center_y
+  def set_stage_center_z(self, stage_center_z):
+    self.stage_center_z = stage_center_z
+    #
+  def set_user_o_sx(self, user_o_sx):
+    self.user_o_sx = user_o_sx
+    # stage coords x pos for user origin.
+  def set_user_o_sy(self, user_o_sy):
+    self.user_o_sy = user_o_sy
+  def set_user_o_sz(self, user_o_sz):
+    self.user_o_sz = user_o_sz
+    #
+  def set_user_origin_to_stage_center(self):
+    self.user_o_sx = self.stage_center_x
+    self.user_o_sy = self.stage_center_y
+    self.user_o_sz = self.stage_center_z
+    #
+  def get_stage_coords(self, ux,uy,uz):
+    # Get stage coords from user coords.
+    dsx = ux * self.stage_units_per_mm
+    sx = self.user_o_sx - dsx
+    dsy = uy * self.stage_units_per_mm
+    sy = self.user_o_sy + dsy
+    dsz = uz * self.stage_units_per_mm
+    sz = self.user_o_sz + dsz
+    return sx, sy, sz
+    #
+  def get_user_coords(self, sx,sy,sz):
+    # Get user coords from stage coords.
+    ssx = self.user_o_sx - sx
+    ux = ssx / self.stage_units_per_mm
+    ssy = sy - self.user_o_sy
+    uy = ssy / self.stage_units_per_mm
+    ssz = sz - self.user_o_sz
+    uz = ssz / self.stage_units_per_mm
+    return ux, uy, uz
+    #
     #
   def init_serial(self):
     if self.run_mode != 'serial':
@@ -47,10 +89,15 @@ class c_stage:
       # dade = serda.decode("Ascii")
       # print("  serda: ", dae)
     #
-  def get_p(self):
+  def sread_user_xyz(self):
+    sx,sy,sz = self.sread_stage_xyz()
+    ux,uy,uz = self.get_user_coords(sx,sy,sz)
+    return ux,uy,uz
+  def sread_stage_xyz(self):
+    # sread:  serial read.
     if self.run_mode != 'serial':
-      print("c_stage:  Simulated get_p().")
-      return [100,101,102]
+      print("c_stage:  Simulated sread_stage_xyz().")
+      return 57000,37500,15000
     #
     seri = self.seri
     self.cbuf()
@@ -63,9 +110,12 @@ class c_stage:
     x=int(ll[0]); y=int(ll[1]); z=int(ll[z]);
     return [x,y,z]
     #
-  def go_p3(self, x,y,z):
+  def go_user_xyz(self, ux, uy, uz):
+    sx,sy,sz = self.get_stage_coords(ux,uy,uz)
+    self.go_stage_xyz(sx, sy, sz)
+  def go_stage_xyz(self, x,y,z):
     if self.run_mode != 'serial':
-      # print("c_stage:  Simulated go_p3().")
+      # print("c_stage:  Simulated stage_xyz().")
       return
     #
     seri = self.seri
@@ -85,7 +135,35 @@ class c_stage:
       print("Warning.  Expected 'R'.")
       print("  Got:  ", dade)
       print("  File:  c_stage.py.")
-      print("  Function go_p3().")
+      print("  Function stage_xyz().")
+    #
+  def go_user_xy(self, ux, uy):
+    sx,sy,sz = self.get_stage_coords(ux,uy,0)
+    self.go_stage_xy(sx, sy)
+  def go_stage_xy(self, x,y):
+    if self.run_mode != 'serial':
+      # print("c_stage:  Simulated go_p3().")
+      return
+    #
+    seri = self.seri
+    ou = 'g'
+    ou += ' {:0d}'.format( x )
+    ou += ' {:0d}'.format( y )
+    ou += '\r\n'
+    send = bytes( ou.encode() )
+    seri.write( send )
+    #
+    # When done, it should return 'R'.
+    serda = seri.readline()
+    dade = serda.decode("Ascii")
+    dade = date.strip() # Not sure if this is needed.
+    if dade != 'R':
+      print("Warning.  Expected 'R'.")
+      print("  Got:  ", dade)
+      print("  File:  c_stage.py.")
+      print("  Function go_stage_xy().")
+    #
+    #
 
 
 

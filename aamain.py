@@ -31,6 +31,13 @@ sola.init_serial()
 stage = c_stage()
 stage.set_run_mode(cc.run_mode)
 stage.set_port(cc.port_stage)
+# ^^^^
+stage.set_stage_units_per_mm(cc.stage_units_per_mm)
+stage.set_stage_center_x(cc.stage_center_x)
+stage.set_stage_center_y(cc.stage_center_y)
+stage.set_stage_center_z(cc.stage_center_z)
+stage.set_user_origin_to_stage_center()
+# ^^^^
 stage.init_serial()
 
 camera = c_camera()
@@ -38,7 +45,10 @@ camera.set_run_mode(cc.run_mode)
 camera.set_im_save_dir(cc.im_save_dir)
 
 chanset = c_chanset()
+chanset.set_run_mode(cc.run_mode)
+chanset.set_stage( stage )
 chanset.load(cc.chanset_file)
+chanset.set_run_mode_in_channels()
 chanset.pro1()
 chanset.save_channels_1a('z1a_chanset.data')
 

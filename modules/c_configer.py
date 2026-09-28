@@ -25,6 +25,12 @@ class c_configer:
       elif key == '!im_save_dir':  self.im_save_dir = mm[1]
       elif key == '!port_sola':  self.port_sola = mm[1]
       elif key == '!port_stage':  self.port_stage = mm[1]
+      elif key == '!stage_units_per_mm':
+            self.stage_units_per_mm = float(mm[1])
+      elif key == '!stage_center_xyz':
+        self.stage_center_x = float(mm[1])
+        self.stage_center_y = float(mm[2])
+        self.stage_center_z = float(mm[3])
       elif key == '!xxx':  self.xxx = mm[1]
       elif key == '!xxx':  self.xxx = mm[1]
       elif key == '!xxx':  self.xxx = mm[1]
