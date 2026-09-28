@@ -10,6 +10,8 @@ class c_stage:
     #
   def set_run_mode(self, run_mode):
     self.run_mode = run_mode
+  def set_port(self, port):
+    self.port = port
     #
   def init_serial(self):
     if self.run_mode != 'serial':
@@ -19,7 +21,8 @@ class c_stage:
     # 9600 8 N 1
     try:
       seri = serial.Serial(
-        port="/dev/prs_prior",
+        # port="/dev/prs_prior",
+        port=self.port,
         baudrate=9600,
         bytesize=serial.EIGHTBITS,
         parity=serial.PARITY_NONE,

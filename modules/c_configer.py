@@ -23,6 +23,8 @@ class c_configer:
       elif key == '!chan_order':
           self.parse_chan_order( mm[1] )
       elif key == '!im_save_dir':  self.im_save_dir = mm[1]
+      elif key == '!port_sola':  self.port_sola = mm[1]
+      elif key == '!port_stage':  self.port_stage = mm[1]
       elif key == '!xxx':  self.xxx = mm[1]
       elif key == '!xxx':  self.xxx = mm[1]
       elif key == '!xxx':  self.xxx = mm[1]

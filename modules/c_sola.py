@@ -25,6 +25,8 @@ class c_sola:
     #
   def set_run_mode(self, run_mode):
     self.run_mode = run_mode
+  def set_port(self, port):
+    self.port = port
     #
     #
   def init_serial(self):
@@ -39,7 +41,8 @@ class c_sola:
     seri = None
     try:
       seri = serial.Serial(
-        port="/dev/prs_sola",
+        # port="/dev/prs_sola",
+        port=self.port,
         baudrate=9600,
         bytesize=serial.EIGHTBITS,
         parity=serial.PARITY_NONE,
