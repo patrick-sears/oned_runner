@@ -1,0 +1,7 @@
+#
+
+start.sh is created during installation.
+It's the entry point into the program.
+There should be a symlink to it
+in /usr/local/bin.
+

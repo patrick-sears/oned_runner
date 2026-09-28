@@ -1,0 +1,16 @@
+.*
+*~
+*.bak
+*.swp
+
+__pycache__/
+
+/user/*
+
+.git
+.gitignore
+
+install.log
+
+start.sh
+
