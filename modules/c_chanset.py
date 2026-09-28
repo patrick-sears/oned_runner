@@ -182,6 +182,11 @@ class c_chanset:
         print("  func:  fread_camera_subarray().")
         sys.exit(1)
     #
+  def check_in_stage_limits(self):
+    order = self.chan_order
+    for i in range(self.n_rchan):
+      ii = order[i]
+      self.chan[ii].check_in_stage_limits()
     #
   def reset_user_origin_with_fidu0(self):
     # That is, set where in stage coordinates

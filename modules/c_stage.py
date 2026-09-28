@@ -34,6 +34,32 @@ class c_stage:
     self.user_o_sy = self.stage_center_y
     self.user_o_sz = self.stage_center_z
     #
+  def set_stage_limits(self, xlo,xhi,ylo,yhi,zlo,zhi):
+    self.stage_limit_x_lo = xlo;
+    self.stage_limit_x_hi = xhi;
+    self.stage_limit_y_lo = ylo;
+    self.stage_limit_y_hi = yhi;
+    self.stage_limit_z_lo = zlo;
+    self.stage_limit_z_hi = zhi;
+    #
+  def is_in_limits_x(self,x):
+    if x < self.stage_limit_x_lo:  return False
+    if x > self.stage_limit_x_hi:  return False
+    return True
+  def is_in_limits_y(self,y):
+    if y < self.stage_limit_y_lo:  return False
+    if y > self.stage_limit_y_hi:  return False
+    return True
+  def is_in_limits_z(self,z):
+    if z < self.stage_limit_z_lo:  return False
+    if z > self.stage_limit_z_hi:  return False
+    return True
+  def is_in_limits_xyz(self,x,y,z):
+    if not self.is_in_limits_x(x):  return False
+    if not self.is_in_limits_y(y):  return False
+    if not self.is_in_limits_z(z):  return False
+    return True
+    #
   def get_stage_coords(self, ux,uy,uz):
     # Get stage coords from user coords.
     dsx = ux * self.stage_units_per_mm

@@ -43,6 +43,28 @@ class c_channel:
   def get_pos_cxyz(self):
     return self.pos_cx, self.pos_cy, self.pos_cz
     #
+  def check_in_stage_limits(self):
+    # Check points b and c.  Assume others in limits.
+    stage=self.stage
+    bx=self.pos_bx;  by=self.pos_by;  bz=self.pos_bz;
+    cx=self.pos_cx;  cy=self.pos_cy;  cz=self.pos_cz;
+    #
+    sx,sy,sz = stage.get_stage_coords(bx,by,bz)
+    if not stage.is_in_limits_xyz(sx,sy,sz):
+      print("Error.  Out of stage limits.")
+      print("  chani: ", self.chani)
+      print("  bx by bz: ", bx, by, bz)
+      print("  stage: ", sx, sy, sz)
+      sys.exit(1)
+    #
+    sx,sy,sz = stage.get_stage_coords(cx,cy,cz)
+    if not stage.is_in_limits_xyz(sx,sy,sz):
+      print("Error.  Out of stage limits.")
+      print("  chani: ", self.chani)
+      print("  cx cy cz: ", cx, cy, cz)
+      print("  stage: ", sx, sy, sz)
+      sys.exit(1)
+    #
   def parse1(self, mm):
     self.chani = int(mm[0])
     #

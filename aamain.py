@@ -36,6 +36,13 @@ stage.set_stage_units_per_mm(cc.stage_units_per_mm)
 stage.set_stage_center_x(cc.stage_center_x)
 stage.set_stage_center_y(cc.stage_center_y)
 stage.set_stage_center_z(cc.stage_center_z)
+stage.set_stage_limits( cc.stage_limit_x_lo,
+                        cc.stage_limit_x_hi,
+                        cc.stage_limit_y_lo,
+                        cc.stage_limit_y_hi,
+                        cc.stage_limit_z_lo,
+                        cc.stage_limit_z_hi
+                        )
 stage.set_user_origin_to_stage_center()
 # ^^^^
 stage.init_serial()
@@ -91,6 +98,11 @@ chanset.pro1()  # Is this right?
 # Save new edges after reset edges.
 chanset.save_channels_1a('z2a_chanset.data')
 chanset.save_channels_1b('z2b_chanset.data')
+
+chanset.check_in_stage_limits()
+# Exits with error if some points are
+# not within stage limits.
+# Checks runner channels, points b and c.
 
 sched_tdx = cc.schedule_tdx
 sched_tdo = cc.schedule_tdo
