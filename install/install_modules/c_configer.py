@@ -14,7 +14,9 @@ from datetime import datetime
 # Read config.
 class c_configer:
   def __init__(self, fname=None):
+    os.chdir('..')
     self.install_dir = Path.cwd().resolve().name
+    os.chdir('install')
     if fname != None:  self.load(fname)
     #
   def load(self, fname):

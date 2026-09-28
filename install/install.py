@@ -32,12 +32,17 @@ if cc.create_install_location:
     path.mkdir(parents=True, exist_ok=True)
 
 
-os.chdir('..')
+os.chdir('../..')
 sou = cc.install_dir+'/'
 des = cc.install_location+'/'+cc.final_dir
 # ief:  install excludes file
-ief = cc.install_dir+'/install.excludes'
+ief = cc.install_dir+'/install/install.excludes'
 #
+
+# print("install_dir: ", cc.install_dir)
+# print("ief: ", ief)
+# sys.exit(0)
+
 cmd = ['rsync', '-avz', '--delete']
 cmd += ['--exclude-from='+ief]
 cmd += [sou, des]
@@ -71,8 +76,8 @@ if os.path.lexists(rcsl_path):
 rcsl_path.symlink_to(rcsl_target)
 
 # Write the install values used to install.log.
-cc.save_config('install.log', 'log')
-cc.save_config('install_final.config','final')
+cc.save_config('install/install.log', 'log')
+cc.save_config('install/install_final.config','final')
 
 os.chdir( cc.install_location+'/'+cc.final_dir )
 if not os.path.exists('start.sh'):
