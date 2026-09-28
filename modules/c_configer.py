@@ -31,7 +31,8 @@ class c_configer:
         self.stage_center_x = float(mm[1])
         self.stage_center_y = float(mm[2])
         self.stage_center_z = float(mm[3])
-      elif key == '!xxx':  self.xxx = mm[1]
+      elif key == '!stage_limits':
+        self.fread_stage_limits(f)
       elif key == '!xxx':  self.xxx = mm[1]
       elif key == '!xxx':  self.xxx = mm[1]
       else:
@@ -52,6 +53,44 @@ class c_configer:
       key = mm[0]
       if key == None:      pass
       elif key == '!xxx':  self.xxx = mm[1]
+    #
+  def fread_stage_limits(self, f):
+    XYZ = 0
+    for l in f:
+      l = l.strip()
+      if len(l) == 0:  break
+      if l[0] == '#':  continue
+      mm = [m.strip() for m in l.split(';')]
+      xyz = mm[0]
+      #
+      vv = [ float(mm[1]),  float(mm[2]) ]
+      vv.sort()
+      if xyz == 'x':
+        self.stage_limit_x_lo = vv[0]
+        self.stage_limit_x_hi = vv[1]
+        XYZ |= 0x01
+      elif xyz == 'y':
+        self.stage_limit_y_lo = vv[0]
+        self.stage_limit_y_hi = vv[1]
+        XYZ |= 0x02
+      elif xyz == 'z':
+        self.stage_limit_z_lo = vv[0]
+        self.stage_limit_z_hi = vv[1]
+        XYZ |= 0x04
+      else:
+        print("Error.  Unrecognized xyz in config.")
+        print("  stage_limits.")
+        print("  xyz:  ", xyz)
+        sys.exit(1)
+      #
+    #
+    if XYZ != 0x07:
+      print("Error.  Missing xyz from stage_limits.")
+      print("  x: ", (XYZ & 0x01) > 0)
+      print("  y: ", (XYZ & 0x02) > 0)
+      print("  z: ", (XYZ & 0x04) > 0)
+      sys.exit(1)
+    #
     #
   def fread_schedule_tdo(self, f):
     #
