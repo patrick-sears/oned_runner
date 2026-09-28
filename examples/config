@@ -1,0 +1,36 @@
+#
+
+
+!run_mode ; serial
+!run_mode ; simulation
+
+!im_save_dir ; z_images
+
+# Runs and time delay before each one.
+!schedule_tdo
+# n_run ; dt
+  1     ;  0
+  3     ; 10
+  4     ; 20
+
+
+!chanset_file ; chanset_001.data
+
+# In order we want to scan.
+!chan_order ; 3  0 1
+
+# AF:
+# Add stage limits.
+# These can be checked before the run
+# when calculating image positions.
+
+# AF:
+# Add udev ports for:  sola, prior.
+# Basler not needed?
+
+# AF:
+# Set sola intensity.
+# Or better set it per channel.
+
+
+

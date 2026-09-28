@@ -1,0 +1,37 @@
+#
+# 2026 ipro 0908v15a au 0908b.
+# Pattern chanset 001.
+# Units:  mm.
+
+!channels
+# i ;; bx      ; by      ; bz      ;; cx      ; cy      ; cz
+  0 ;;    0.00 ;    0.00 ;    0.00 ;;   57.00 ;    0.00 ;    0.00
+  1 ;;    0.00 ;   -6.00 ;    0.00 ;;   57.00 ;   -6.00 ;    0.00
+  2 ;;    0.00 ;  -12.00 ;    0.00 ;;   57.00 ;  -12.00 ;    0.00
+  3 ;;    0.00 ;  -18.00 ;    0.00 ;;   57.00 ;  -18.00 ;    0.00
+
+
+# m_sta:  Length from (bx,by,bz) to sweep start.
+# m_end:  Length from sweep end to (cx,cy,cz).
+# Step length (dL_step) between successive images
+# along a channel.
+# ----
+!point_sequence
+# m_sta ; m_end ; dL_step ; channels
+    4.0 ;   4.0 ;     1.0 ; 2-3
+    4.0 ;   4.0 ;     1.0 ; 1
+    4.0 ;   4.0 ;     1.0 ; 0
+#     4.0 ;   4.0 ;     1.0 ; 0 2-3
+#     4.0 ;   4.0 ;     1.0 ; 1
+
+# Need to add camera sub-array for each channel here.
+# Top left (x1, y1), bottom right (x2, y2).
+# (x1,y1) is inclusive, (x2,y2) is exclusive.
+!camera_subarray
+# x1 ;   y1 ;   x2 ;   y2 ; channels
+   0 ;    0 ; 1280 ; 1024 ; 0
+   0 ;    0 ; 1280 ; 1024 ; 1
+   0 ;  400 ;  600 ; 1024 ; 2-3
+
+
+
