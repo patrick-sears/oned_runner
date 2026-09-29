@@ -209,7 +209,7 @@ class c_channel:
       x = self.im_pos_x[i];
       y = self.im_pos_y[i];
       z = self.im_pos_z[i];
-      L = i + self.dL_step;
+      L = i * self.dL_step;
       ou += '{:5d}'.format( i )
       ou += ' ; {:9.4f}'.format( L )
       ou += ' ; {:9.4f}'.format( x )
@@ -239,7 +239,7 @@ class c_channel:
       x,y,z = coords(ux,uy,uz)
       inlim = '.'
       if not in_lims(x,y,z): inlim = 'x'
-      L = i + self.dL_step;
+      L = i * self.dL_step;
       ou += '{:5d}'.format( i )
       ou += ' ; {:9.4f}'.format( L )
       ou += ' ; {:9.1f}'.format( x )
