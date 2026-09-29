@@ -84,17 +84,19 @@ class c_channel:
     Dbcx=cx-bx;  Dbcy=cy-by;  Dbcz=cz-bz;
     Len_bc = hypot(Dbcx,Dbcy,Dbcz)
     #
+    # Unit vector in direction b->c, <dux,duy,duz>.
     dux=Dbcx/Len_bc; duy=Dbcy/Len_bc; duz=Dbcz/Len_bc;
+    #
     start_x=bx+dux*m_start;
     start_y=by+duy*m_start;
     start_z=bz+duz*m_start;
-    step_dx = start_x + dux*dL_step
-    step_dy = start_y + duy*dL_step
-    step_dz = start_z + duz*dL_step
+    step_dx = dux*dL_step
+    step_dy = duy*dL_step
+    step_dz = duz*dL_step
     #
     self.Len_sweep = Len_bc - m_start - m_end
     #
-    self.n_im = int(self.Len_sweep/dL_step)
+    self.n_im = int(self.Len_sweep/dL_step)+1
     self.start_x=start_x;
     self.start_y=start_y;
     self.start_z=start_z;
