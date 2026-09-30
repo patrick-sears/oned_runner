@@ -201,11 +201,20 @@ class c_chanset:
     print("  then hit enter.")
     uin = input("  >> ")
     # Don't bother checking.
-    sx,sy,sz = self.stage.sread_stage_xyz()
+    fidsx,fidsy,fidsz = self.stage.sread_stage_xyz()
     if self.run_mode != 'serial':  return
-    self.stage.set_user_o_sx( sx )
-    self.stage.set_user_o_sy( sy )
-    self.stage.set_user_o_sz( sz )
+    #
+    fidux = self.fidu_x[0];
+    fiduy = self.fidu_y[0];
+    fiduz = self.fidu_z[0];
+    su = self.stage.stage_units_per_mm
+    orisx = fidsx + (fidux * su)
+    orisy = fidsy - (fiduy * su)
+    orisz = fidsz + (fiduz * su)
+    #
+    self.stage.set_user_o_sx( orisx )
+    self.stage.set_user_o_sy( orisy )
+    self.stage.set_user_o_sz( orisz )
     #
   def reset_edges(self):
     order = self.chan_order
