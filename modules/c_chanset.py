@@ -191,9 +191,9 @@ class c_chanset:
   def reset_user_origin_with_fidu0(self):
     # That is, set where in stage coordinates
     # the user origin is located.
-    f0x = self.fidu_x[0]
-    f0y = self.fidu_y[0]
-    self.stage.go_user_xy(f0x,f0y);
+    # f0x = self.fidu_x[0]
+    # f0y = self.fidu_y[0]
+    # self.stage.go_user_xy(f0x,f0y);
     print("Resetting location of user origin")
     print("  in stage coordinate system")
     print("  using fiducial point 0.")
@@ -201,6 +201,7 @@ class c_chanset:
     print("  then hit enter.")
     uin = input("  >> ")
     # Don't bother checking.
+    print("DDD.  Passed uin.")
     sx,sy,sz = self.stage.sread_stage_xyz()
     if self.run_mode != 'serial':  return
     self.stage.set_user_o_sx( sx )

@@ -119,9 +119,9 @@ class c_stage:
     while True:
       serda = seri.readline()
       slen = len(serda)
-      if len == 0:  break
+      if slen == 0:  break
       # dade = serda.decode("Ascii")
-      # print("  serda: ", dae)
+      # print("  dade: ", dade)
     #
   def sread_user_xyz(self):
     sx,sy,sz = self.sread_stage_xyz()
@@ -133,15 +133,19 @@ class c_stage:
       print("c_stage:  Simulated sread_stage_xyz().")
       return 57000,37500,0
     #
+    print("DDD:  In sread_stage_xyz().")
     seri = self.seri
     self.cbuf()
+    print("DDD:  buf clear.")
     ouline = 'p\r\n'
     send = bytes(ouline.encode())
     seri.write(send)
+    print("DDD:  Wrote send.")
     serda = seri.readline()
     l = serda.decode("Ascii")
     ll = l.split(',')
     x=int(ll[0]); y=int(ll[1]); z=int(ll[z]);
+    print("DDD:  Got these xyz: ", x, y, z)
     return x,y,z
     #
   def go_user_xyz(self, ux, uy, uz):
