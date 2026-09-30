@@ -201,7 +201,6 @@ class c_chanset:
     print("  then hit enter.")
     uin = input("  >> ")
     # Don't bother checking.
-    print("DDD.  Passed uin.")
     sx,sy,sz = self.stage.sread_stage_xyz()
     if self.run_mode != 'serial':  return
     self.stage.set_user_o_sx( sx )
