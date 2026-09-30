@@ -68,19 +68,23 @@ class c_stage:
     # Get stage coords from user coords.
     dsx = ux * self.stage_units_per_mm
     sx = self.user_o_sx - dsx
+    #
     dsy = uy * self.stage_units_per_mm
     sy = self.user_o_sy + dsy
+    #
     dsz = uz * self.stage_units_per_mm
-    sz = self.user_o_sz + dsz
+    sz = self.user_o_sz - dsz
     return sx, sy, sz
     #
   def get_user_coords(self, sx,sy,sz):
     # Get user coords from stage coords.
     ssx = self.user_o_sx - sx
     ux = ssx / self.stage_units_per_mm
+    #
     ssy = sy - self.user_o_sy
     uy = ssy / self.stage_units_per_mm
-    ssz = sz - self.user_o_sz
+    #
+    ssz = self.user_o_sz - sz
     uz = ssz / self.stage_units_per_mm
     return ux, uy, uz
     #
