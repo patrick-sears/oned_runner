@@ -189,7 +189,7 @@ try:
     show_header = True
     i_run += 1
     if i_run == n_run:  break
-    else:               nex_t = schedule[i_run+1]
+    else:               nex_t = schedule[i_run]
     #
   #
   #
