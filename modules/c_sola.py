@@ -35,6 +35,8 @@ class c_sola:
       return
     #
     init_sola = self.init_sola
+    light_on  = self.light_on
+    light_off = self.light_off
     #
     # Input port as the serial ID.
     # Plan:  Use udev rules to create /dev/prs_sola.
@@ -56,14 +58,19 @@ class c_sola:
     #
     try:
       # for command in init_sola:  seri.write(command)
+      print("DDD try init_sola[0].")
       seri.write( init_sola[0] )
       seri.flush()
       #
+      print("DDD try init_sola[1].")
       seri.write( init_sola[1] )
       seri.flush()
       #
+      print("DDD try light_off.")
       seri.write(light_off)
       seri.flush()
+      #
+      print("DDD Done init sola.")
     except:
       print("Failed init_sola.")
       sys.exit(1)
