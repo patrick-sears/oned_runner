@@ -159,9 +159,9 @@ class c_stage:
     #
     seri = self.seri
     ou = 'g'
-    ou += ' {:0d}'.format( x )
-    ou += ' {:0d}'.format( y )
-    ou += ' {:0d}'.format( z )
+    ou += ' {:0d}'.format( int(x) )
+    ou += ' {:0d}'.format( int(y) )
+    ou += ' {:0d}'.format( int(z) )
     ou += '\r\n'
     send = bytes( ou.encode() )
     seri.write( send )
@@ -169,7 +169,7 @@ class c_stage:
     # When done, it should return 'R'.
     serda = seri.readline()
     dade = serda.decode("Ascii")
-    dade = date.strip() # Not sure if this is needed.
+    dade = dade.strip() # Not sure if this is needed.
     if dade != 'R':
       print("Warning.  Expected 'R'.")
       print("  Got:  ", dade)
@@ -191,8 +191,8 @@ class c_stage:
     #
     seri = self.seri
     ou = 'g'
-    ou += ' {:0d}'.format( x )
-    ou += ' {:0d}'.format( y )
+    ou += ' {:0d}'.format( int(x) )
+    ou += ' {:0d}'.format( int(y) )
     ou += '\r\n'
     send = bytes( ou.encode() )
     seri.write( send )
@@ -200,7 +200,7 @@ class c_stage:
     # When done, it should return 'R'.
     serda = seri.readline()
     dade = serda.decode("Ascii")
-    dade = date.strip() # Not sure if this is needed.
+    dade = dade.strip() # Not sure if this is needed.
     if dade != 'R':
       print("Warning.  Expected 'R'.")
       print("  Got:  ", dade)
@@ -219,7 +219,7 @@ class c_stage:
     # When done, it should return '0'.
     serda = seri.readline()
     dade = serda.decode("Ascii")
-    dade = date.strip() # Not sure if this is needed.
+    dade = dade.strip() # Not sure if this is needed.
     if dade != '0':
       print("Warning.  Expected '0'.")
       print("  Got:  ", dade)
