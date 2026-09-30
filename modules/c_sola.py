@@ -10,18 +10,18 @@ class c_sola:
   def __init__(self):
     # SOLA initialization commands. Needed after power on/off.
     self.init_sola = [
-    bytes.fromhex("57 02 FF 50"),
-    bytes.fromhex("57 03 FD 50"),
-    ]
+      [0x57, 0x02, 0xFF, 0x50],
+      [0x57, 0x03, 0xFD, 0x50],
+      ]
     #
     # SOLA light on and off commands
-    self.light_on  = bytes.fromhex("4F 7D 50")
-    self.light_off = bytes.fromhex("4F 7F 50")
+    self.light_on  = [0x4f, 0x7d, 0x50]
+    self.light_off = [0x4f, 0x7f, 0x50]
     #
     # SOLA light power level command
-    self.intensity_max = bytes.fromhex("53 46 02 01 00 50")
-    self.intensity_min = bytes.fromhex("53 46 02 01 FF 50")
-    self.intensity_50  = bytes.fromhex("53 46 02 01 80 50") # 50%
+    self.intensity_max = [0x53, 0x46, 0x02, 0x01, 0x00, 0x50]
+    self.intensity_min = [0x53, 0x46, 0x02, 0x01, 0xFF, 0x50]
+    self.intensity_50  = [0x53, 0x46, 0x02, 0x01, 0x80, 0x50] # 50%
     #
   def set_run_mode(self, run_mode):
     self.run_mode = run_mode
