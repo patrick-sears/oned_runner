@@ -51,6 +51,7 @@ stage.init_serial()
 camera = c_camera()
 camera.set_run_mode(cc.run_mode)
 camera.set_im_save_dir(cc.im_save_dir)
+camera.init_serial()
 
 chanset = c_chanset()
 chanset.set_run_mode(cc.run_mode)

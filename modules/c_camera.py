@@ -22,8 +22,8 @@ class c_camera:
       print("c_camera:  Simulated init_serial().")
       return
     #
-    self.facto   = pylon.TlFactor.GetInstance()
-    devices = facto.EnumerateDevices()
+    factory = pylon.TlFactory.GetInstance()
+    devices = factory.EnumerateDevices()
     n_devices = len(devices)
     if n_devices != 1:
       print("Error.  n_devices != 1.")
@@ -36,10 +36,13 @@ class c_camera:
     self.friendly_name = de0.GetFriendlyName()
     self.full_name = de0.GetFullName()
     self.serial_num = de0.GetSerialNumber()
+    print("c_camera.")
+    print("  friendly_name:  ", self.friendly_name)
+    print("  serial_num:     ", self.serial_num)
     #
     # cama:  camera attachement
     self.cama = pylon.InstantCamera()
-    self.cama.Attach(self.facto.CreaeFirstDevice())
+    self.cama.Attach(factory.CreateFirstDevice())
     #
   def take_image(self, imi):
     if self.run_mode != 'serial':
