@@ -203,6 +203,25 @@ class c_stage:
       print("  File:  c_stage.py.")
       print("  Function go_stage_xy().")
     #
+  def reset_z0_to_current_stage_position(self):
+    if self.run_mode != 'serial':
+      return
+    #
+    seri = self.seri
+    ou = 'pz 0'
+    ou += '\r\n'
+    send = bytes( ou.encode() )
+    seri.write( send )
+    # When done, it should return '0'.
+    serda = seri.readline()
+    dade = serda.decode("Ascii")
+    dade = date.strip() # Not sure if this is needed.
+    if dade != '0':
+      print("Warning.  Expected '0'.")
+      print("  Got:  ", dade)
+      print("  File:  c_stage.py.")
+      print("  Func:  c_reset_z0_to_current_stage_position.py.")
+    #
     #
 
 

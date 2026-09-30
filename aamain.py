@@ -47,6 +47,7 @@ stage.set_user_origin_to_stage_center()
 # ^^^^
 stage.init_serial()
 
+
 camera = c_camera()
 camera.set_run_mode(cc.run_mode)
 camera.set_im_save_dir(cc.im_save_dir)
@@ -82,6 +83,12 @@ for i in range(n_rchan):
 chanset.set_chan_order(cc.chan_order)
 chanset.save_channels_1b('z1b_chanset.data')
 
+print("Reset the z level to zero.")
+print("  Focus on the channel or membrane.")
+uin = input("  Then print enter. >> ")
+# Ignore input.
+stage.reset_z0_to_current_stage_position()
+# jjj JJJJJJJJJJJJJJJJJJJJJJJJ
 
 # I'm not sure this is where I want this.
 # But note that it needs to come after setting
