@@ -89,6 +89,11 @@ uin = input("  Then print enter. >> ")
 # Ignore input.
 stage.reset_z0_to_current_stage_position()
 
+
+print()
+print("Resetting origin using fiducial point 0.")
+chanset.reset_user_origin_with_fidu0()
+
 # I'm not sure this is where I want this.
 # But note that it needs to come after setting
 # the channel orders.

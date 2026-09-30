@@ -131,7 +131,7 @@ class c_stage:
     # sread:  serial read.
     if self.run_mode != 'serial':
       print("c_stage:  Simulated sread_stage_xyz().")
-      return 57000,37500,15000
+      return 57000,37500,0
     #
     seri = self.seri
     self.cbuf()
@@ -142,7 +142,7 @@ class c_stage:
     l = serda.decode("Ascii")
     ll = l.split(',')
     x=int(ll[0]); y=int(ll[1]); z=int(ll[z]);
-    return [x,y,z]
+    return x,y,z
     #
   def go_user_xyz(self, ux, uy, uz):
     sx,sy,sz = self.get_stage_coords(ux,uy,uz)
@@ -174,7 +174,7 @@ class c_stage:
       print("Warning.  Expected 'R'.")
       print("  Got:  ", dade)
       print("  File:  c_stage.py.")
-      print("  Function stage_xyz().")
+      print("  Func:  go_stage_xyz().")
     #
   def go_user_xy(self, ux, uy):
     sx,sy,sz = self.get_stage_coords(ux,uy,0)

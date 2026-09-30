@@ -212,10 +212,6 @@ class c_chanset:
     n_rchan = self.n_rchan
     ok = True
     #
-    # First reset user origin using fidu[0].
-    # Using only fidu[0] for now.
-    self.reset_user_origin_with_fidu0()
-    #
     print("Reset capillary ends for each")
     print("  capillary that will be used.")
     for i in range(n_rchan):
