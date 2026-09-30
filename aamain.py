@@ -130,6 +130,8 @@ runner.set_rchan(rchan)
 
 print()
 print('Press enter to start, x to exit.')
+print('  *** Remember to switch optical path')
+print('      from oculars to camera.')
 uin = input('  >> ')
 if uin != '':
   print("Early exit.")

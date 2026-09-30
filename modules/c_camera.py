@@ -68,18 +68,22 @@ class c_camera:
     # up per channel.
     # So each channel would first call
     # some kind of a setup_sweep() function.
-    cetype = cama.PiselFromat.Value
+    #
+    cama.Open()
+    # cama.Open() must come before doing
+    # much of the following.
+    #
+    cetype = cama.PixelFormat.Value
     exauto = cama.ExposureAuto.Value
     extime = cama.ExposureTime.Value
     #
-    cama.ExposureTime.Value = 100.0
+    cama.ExposureTime.Value = 10000.0
     #
     timeout_ms = 2000;
     # If 2s pass, there is no result.
     #
-    cama.Open()
     cama.StartGrabbing(1) # Grab 1 image.
-    grab = cam.RetrieveResult( timeout_ms,
+    grab = cama.RetrieveResult( timeout_ms,
                 pylon.TimeoutHandling_Return
                 )
     #
@@ -96,7 +100,7 @@ class c_camera:
     # Save the image.
     cv2.imwrite(imfuz, ima)
     #
-    cam.Close()
+    cama.Close()
     #
 
 
