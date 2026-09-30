@@ -163,20 +163,21 @@ def uc_green(s):
 waiting_mark = uc_green('====================================')
 
 i_run = 0
-i_nex = 0
 nex_t = schedule[0]
-last_run = False
+show_header = True
 try:
   sola.set_intensity_50()
   #
   print()
   print("Schedule running...")
-  print()
-  print(waiting_mark)
-  print("Waiting to start run ", i_run, "...")
-  print("  Next run: ", nex_t.strftime(fomb))
   while True:
-    if last_run:  break
+    if show_header:
+      print()
+      print(waiting_mark)
+      print("Waiting to start run ", i_run, "...")
+      print("  Next run: ", nex_t.strftime(fomb))
+      show_header = False
+    #
     now = datetime.now()
     if now < nex_t:
       time.sleep(0.1)
@@ -184,17 +185,11 @@ try:
     #
     runner.go_run(i_run, now)
     #
+    # Prep for next run.
+    show_header = True
     i_run += 1
-    if i_run == n_run-1:
-      last_run = True
-    else:
-      nex_t = schedule[i_run+1]
-      print()
-      print(waiting_mark)
-      print("Waiting to start run ", i_run, "...")
-      print("  Next run: ", nex_t.strftime(fomb))
-    #
-    #
+    if i_run == n_run:  break
+    else:               nex_t = schedule[i_run+1]
     #
   #
   #

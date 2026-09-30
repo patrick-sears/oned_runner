@@ -119,6 +119,11 @@ class c_configer:
     n_run = len(tdo)
     print("n_run: ", n_run)
     #
+    print("Run times from t0.")
+    for i in range(n_run):
+      print("  run["+str(i)+"]  ",tdo[i].total_seconds())
+    print()
+    #
   def parse_chan_order(self, m1):
     ll = ( ' '.join(m1.split()) ).split()
     self.chan_order = []
