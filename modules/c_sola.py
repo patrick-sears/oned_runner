@@ -55,7 +55,13 @@ class c_sola:
       sys.exit(1)
     #
     try:
-      for command in init_sola:  seri.write(command)
+      # for command in init_sola:  seri.write(command)
+      seri.write( init_sola[0] )
+      seri.flush()
+      #
+      seri.write( init_sola[1] )
+      seri.flush()
+      #
       seri.write(light_off)
       seri.flush()
     except:
