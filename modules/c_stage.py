@@ -96,7 +96,7 @@ class c_stage:
     #
     # 9600 8 N 1
     try:
-      seri = serial.Serial(
+      self.seri = serial.Serial(
         # port="/dev/prs_prior",
         port=self.port,
         baudrate=9600,

@@ -58,19 +58,19 @@ class c_sola:
     #
     try:
       # for command in init_sola:  seri.write(command)
-      print("DDD try init_sola[0].")
+      # print("DDD try init_sola[0].")
       seri.write( init_sola[0] )
       seri.flush()
       #
-      print("DDD try init_sola[1].")
+      # print("DDD try init_sola[1].")
       seri.write( init_sola[1] )
       seri.flush()
       #
-      print("DDD try light_off.")
+      # print("DDD try light_off.")
       seri.write(light_off)
       seri.flush()
       #
-      print("DDD Done init sola.")
+      # print("DDD Done init sola.")
     except:
       print("Failed init_sola.")
       sys.exit(1)
