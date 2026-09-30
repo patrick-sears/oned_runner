@@ -88,7 +88,6 @@ print("  Focus on the channel or membrane.")
 uin = input("  Then print enter. >> ")
 # Ignore input.
 stage.reset_z0_to_current_stage_position()
-# jjj JJJJJJJJJJJJJJJJJJJJJJJJ
 
 # I'm not sure this is where I want this.
 # But note that it needs to come after setting
@@ -122,15 +121,6 @@ runner.set_rlog(rlog)
 runner.set_sola(sola) # sola seria
 runner.set_rchan(rchan)
 
-print()
-print("-----------------------------")
-print("AF")
-print("  Here we need to 'reset edges'.")
-print("  Still needs to be implemented.")
-print("  And then this needs to be saved")
-print("  to a file.")
-print("-----------------------------")
-print()
 
 print()
 print('Press enter to start, x to exit.')

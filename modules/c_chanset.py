@@ -312,6 +312,9 @@ class c_chanset:
     ou += '# Units:  mm.\n'
     ou += '# Only running channels are listed.\n'
     ou += '# Channels listed in run order.\n'
+    ou += "# in limits:\n"
+    ou += "#   .     Ok, in limits\n"
+    ou += "#   x     Outside limits.  Will cause an error.\n"
     #
     ou += '\n'
     for i in range(n_rchan):
