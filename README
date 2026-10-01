@@ -1,0 +1,19 @@
+
+
+One-D Runner.
+
+It's a program to control equipment attached to
+a microscope to run one-dimensional diffusion
+assays.
+
+Equipment controlled.
+- Prior ProScan motorized stage.
+- Lumencor Sola excitation light source.
+- Basler acA1300-200um.
+
+A schedule and a capillary holder description
+is given to the program.
+It times determined in the schedule it takes
+images along each of the capillaries.
+
+
