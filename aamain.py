@@ -17,6 +17,7 @@ from datetime import datetime
 
 foma = "%Y-%m-%d %H:%M:%S"
 fomb = "%Y-%m-%d %a %H:%M:%S"
+fomc = "%Y%m%d_%H%M%S"
 
 cc = c_configer('config')
 
@@ -48,9 +49,17 @@ stage.set_user_origin_to_stage_center()
 stage.init_serial()
 
 
+# jjj JJJJJJJJJJJJJJJJJ
+now = datetime.now()
+stime = now.strftime(fomc)
+dz_run = 'odr_'+stime+'/'
+dz_images = dz_run+'run_images/'
+os.mkdir(dz_run)
+os.mkdir(dz_images)
+
 camera = c_camera()
 camera.set_run_mode(cc.run_mode)
-camera.set_im_save_dir(cc.im_save_dir)
+camera.set_im_save_dir(dz_images)
 camera.init_serial()
 
 chanset = c_chanset()

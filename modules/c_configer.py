@@ -22,7 +22,6 @@ class c_configer:
       elif key == '!chanset_file':  self.chanset_file = mm[1]
       elif key == '!chan_order':
           self.parse_chan_order( mm[1] )
-      elif key == '!im_save_dir':  self.im_save_dir = mm[1]
       elif key == '!port_sola':  self.port_sola = mm[1]
       elif key == '!port_stage':  self.port_stage = mm[1]
       elif key == '!stage_units_per_mm':
@@ -135,16 +134,6 @@ class c_configer:
     if rm != "serial" and rm != "simulation":
       print("Error.  Strange run_mode.")
       print("  run_mode: ", run_mode)
-      sys.exit(1)
-    #
-    im_save_dir = self.im_save_dir
-    if not os.path.exists(im_save_dir):
-      os.mkdir(im_save_dir)
-    #
-    lisa = os.listdir(im_save_dir)
-    if len(lisa) > 0:
-      print("Error.")
-      print("  im_save_dir is not empty.")
       sys.exit(1)
     #
     #
