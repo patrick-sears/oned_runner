@@ -2,12 +2,19 @@
 
 import sys
 
+# def get_hex_str(hx):
+#   hhx = hx.hex()
+#   n_hx = len(hx)
+#   ou = ''
+#   for i in range(n_hx):
+#     ou += ' '+hhx[2*i:2*i+2]
+#   return ou[1:]
 def get_hex_str(hx):
-  hhx = hx.hex()
   n_hx = len(hx)
   ou = ''
   for i in range(n_hx):
-    ou += ' '+hhx[2*i:2*i+2]
+    hhx = hex( hx[i] )
+    ou += ' '+hhx
   return ou[1:]
 
 
