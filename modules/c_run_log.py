@@ -4,8 +4,11 @@
 class c_run_log:
   def __init__(self):
     self.oulog = ''
-    self.log_fname = 'zx-run.log'
-    pass
+    #
+  def set_dz_run(self, dz_run):
+    self.dz_run = dz_run
+    self.log_fname = dz_run+'run.log'
+    #
   def add(self, ou):
     self.oulog += ou
   def save(self):

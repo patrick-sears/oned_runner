@@ -21,7 +21,17 @@ fomc = "%Y%m%d_%H%M%S"
 
 cc = c_configer('config')
 
+
+
+now = datetime.now()
+stime = now.strftime(fomc)
+dz_run = 'odr_'+stime+'/'
+dz_images = dz_run+'run_images/'
+os.mkdir(dz_run)
+os.mkdir(dz_images)
+
 rlog = c_run_log()
+rlog.set_dz_run(dz_run)
 
 
 sola = c_sola()
@@ -49,13 +59,6 @@ stage.set_user_origin_to_stage_center()
 stage.init_serial()
 
 
-# jjj JJJJJJJJJJJJJJJJJ
-now = datetime.now()
-stime = now.strftime(fomc)
-dz_run = 'odr_'+stime+'/'
-dz_images = dz_run+'run_images/'
-os.mkdir(dz_run)
-os.mkdir(dz_images)
 
 camera = c_camera()
 camera.set_run_mode(cc.run_mode)
