@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import sys
+import time
 import serial
 # Requires pyserial
 
@@ -144,6 +145,26 @@ class c_stage:
     x=int(ll[0]); y=int(ll[1]); z=int(ll[2]);
     return x,y,z
     #
+  def seri_wait_for_R(self):
+    seri = self.seri
+    n_try = 80 ; # 80*0.1 = 8s
+    dade = ''
+    while n_try > 0:
+      serda = seri.readline()
+      dade = serda.decode("Ascii")
+      dade = dade.strip() # Not sure if this is needed.
+      if len(dade) != 0:  break
+      time.sleep(0.1)
+      n_try -= 1
+    if dade == 'R':  return
+    print("Error.  Serial waiting for R.")
+    if dade == '':
+      print("  Exceeded max tries.")
+    else:
+      print("  Received: ", dade)
+    sys.exit(1)
+    #
+    #
   def go_user_xyz(self, ux, uy, uz):
     sx,sy,sz = self.get_stage_coords(ux,uy,uz)
     self.go_stage_xyz(sx, sy, sz)
@@ -166,15 +187,9 @@ class c_stage:
     send = bytes( ou.encode() )
     seri.write( send )
     #
-    # When done, it should return 'R'.
-    serda = seri.readline()
-    dade = serda.decode("Ascii")
-    dade = dade.strip() # Not sure if this is needed.
-    if dade != 'R':
-      print("Warning.  Expected 'R'.")
-      print("  Got:  ", dade)
-      print("  File:  c_stage.py.")
-      print("  Func:  go_stage_xyz().")
+    # It should return 'R' when the stage
+    # has physically stopped moving.
+    self.seti_wait_for_R()
     #
   def go_user_xy(self, ux, uy):
     sx,sy,sz = self.get_stage_coords(ux,uy,0)
@@ -197,15 +212,9 @@ class c_stage:
     send = bytes( ou.encode() )
     seri.write( send )
     #
-    # When done, it should return 'R'.
-    serda = seri.readline()
-    dade = serda.decode("Ascii")
-    dade = dade.strip() # Not sure if this is needed.
-    if dade != 'R':
-      print("Warning.  Expected 'R'.")
-      print("  Got:  ", dade)
-      print("  File:  c_stage.py.")
-      print("  Function go_stage_xy().")
+    # It should return 'R' when the stage
+    # has physically stopped moving.
+    self.seti_wait_for_R()
     #
   def reset_z0_to_current_stage_position(self):
     if self.run_mode != 'serial':
