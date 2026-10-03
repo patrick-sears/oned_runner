@@ -27,9 +27,7 @@ class c_configer:
       if l[0] == '#':  continue
       mm = [m.strip() for m in l.split(';')]
       key = mm[0]
-      if key == '!create_install_location':
-        self.create_install_location = get_true_false_str(mm[1])
-      elif key == '!install_location':
+      if key == '!install_location':
         self.install_location = mm[1]
       elif key == '!final_dir': self.final_dir = mm[1]
       elif key == '!run_call_location': 
@@ -53,9 +51,7 @@ class c_configer:
     args_good = True
     ii = 1
     while ii < n_arg:
-      if arg[ii] == '--create_install_location':
-        self.create_install_location = True
-      elif arg[ii] == '--install_location':
+      if arg[ii] == '--install_location':
         if ii == n_arg:
           args_good = False
           break
@@ -105,7 +101,6 @@ class c_configer:
   def print_config(self):
     print("Final config values.")
     print("  install_dir ; ", self.install_dir)
-    print("  create_install_location ; ", self.create_install_location)
     print("  install_location  ; ", self.install_location)
     print("  final_dir         ; ", self.final_dir)
     print("  run_call_location ; ", self.run_call_location)
@@ -123,8 +118,6 @@ class c_configer:
     ou += '\n'
     ou += '# ________________________________\n'
     ou += '# '+stime+'\n'
-    tf = get_str_of_true_false(self.create_install_location)
-    ou += '!create_install_location ; '+tf+'\n'
     ou += '!install_location  ; '+self.install_location+'\n'
     ou += '!final_dir         ; '+self.final_dir+'\n'
     ou += '!run_call_location ; '+self.run_call_location+'\n'

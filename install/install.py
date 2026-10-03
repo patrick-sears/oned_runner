@@ -25,12 +25,6 @@ cc.parse_arguments(sys.argv)
 cc.print_config()
 
 
-if cc.create_install_location:
-  if not os.path.exists(cc.install_location):
-    import pathlib
-    path = pathlib.Path(cc.install_location)
-    path.mkdir(parents=True, exist_ok=True)
-
 
 os.chdir('../..')
 sou = cc.install_dir+'/'
