@@ -1,5 +1,4 @@
 
-
 One-D Runner.
 
 It's a program to control equipment attached to
@@ -9,10 +8,10 @@ assays.
 Equipment controlled.
 - Prior ProScan motorized stage.
 - Lumencor Sola excitation light source.
-- Basler acA1300-200um.
+- Basler acA1300-200um camera.
 
 A schedule and a capillary holder description
-is given to the program.
+are given to the program.
 At times determined in the schedule it takes
 images along each of the capillaries.
 
