@@ -34,7 +34,6 @@ class c_configer:
         self.run_call_location = mm[1]
       elif key == '!run_call': self.run_call = mm[1]
       elif key == '!user_config': self.user_config = mm[1]
-      elif key == '!user_wosp': self.user_wosp = mm[1]
       elif key == '!venv_name': self.venv_name = mm[1]
       elif key == '!venv_location': self.venv_location = mm[1]
       elif key == '!xxx': self.xxx = mm[1]
@@ -81,12 +80,6 @@ class c_configer:
           break
         ii += 1
         self.user_config = arg[ii]
-      elif arg[ii] == '--user_wosp':
-        if ii == n_arg:
-          args_good = False
-          break
-        ii += 1
-        self.user_wosp = arg[ii]
       else:
         args_good = False
         break
@@ -106,7 +99,6 @@ class c_configer:
     print("  run_call_location ; ", self.run_call_location)
     print("  run_call          ; ", self.run_call)
     print("  user_config       ; ", self.user_config)
-    print("  user_wosp         ; ", self.user_wosp)
     #
   def save_config(self, fzname, outype):
     fuzname = self.install_location+'/'+self.final_dir+'/'+fzname
@@ -123,7 +115,6 @@ class c_configer:
     ou += '!run_call_location ; '+self.run_call_location+'\n'
     ou += '!run_call          ; '+self.run_call+'\n'
     ou += '!user_config       ; '+self.user_config+'\n'
-    ou += '!user_wosp         ; '+self.user_wosp+'\n'
     ou += '\n'
     if outype == 'log':
       fz = open(fuzname,'a')
