@@ -11,7 +11,7 @@ from modules.c_runner import *
 from modules.c_run_log import *
 
 
-import sys
+import sys, os, shutil
 import time
 from datetime import datetime
 
@@ -19,7 +19,8 @@ foma = "%Y-%m-%d %H:%M:%S"
 fomb = "%Y-%m-%d %a %H:%M:%S"
 fomc = "%Y%m%d_%H%M%S"
 
-cc = c_configer('config')
+config_fname = 'config'
+cc = c_configer(config_fname)
 
 
 
@@ -27,8 +28,14 @@ now = datetime.now()
 stime = now.strftime(fomc)
 dz_run = 'odr_'+stime+'/'
 dz_images = dz_run+'run_images/'
+dz_inputs = dz_run+'b1_inputs/'
+dz_data   = dz_run+'b2_data/'
 os.mkdir(dz_run)
 os.mkdir(dz_images)
+os.mkdir(dz_inputs)
+os.mkdir(dz_data)
+shutil.copyfile(config_fname,dz_inputs+'config')
+
 
 rlog = c_run_log()
 rlog.set_dz_run(dz_run)
@@ -71,7 +78,10 @@ chanset.set_stage( stage )
 chanset.load(cc.chanset_file)
 chanset.set_run_mode_in_channels()
 chanset.pro1()
-chanset.save_channels_1a('z1a_chanset.data')
+fuz = dz_inputs+'e0a_chanset.data'
+shutil.copyfile(cc.chanset_file, fuz)
+fuz = dz_inputs+'e1a_chanset.data'
+chanset.save_channels_1a(fuz)
 
 
 # n_rchan, number of channels that will be run.
@@ -94,7 +104,8 @@ for i in range(n_rchan):
   rchan[i].set_camera(camera) # Basler camera
 
 chanset.set_chan_order(cc.chan_order)
-chanset.save_channels_1b('z1b_chanset.data')
+fuz = dz_inputs+'e1b_chanset.data'
+chanset.save_channels_1b(fuz)
 
 print("Reset the z level to zero.")
 print("  Focus on the channel or membrane.")
@@ -120,9 +131,12 @@ if rv != 0:
 chanset.pro1()  # Is this right?
 
 # Save new edges after reset edges.
-chanset.save_channels_1a('z2a_chanset.data')
-chanset.save_channels_1b('z2b_chanset.data')
-chanset.save_channels_1c('z2c_chanset_stage.data')
+fuz = dz_inputs+'e2a_chanset.data'
+chanset.save_channels_1a(fuz)
+fuz = dz_inputs+'e2b_chanset.data'
+chanset.save_channels_1b(fuz)
+fuz = dz_inputs+'e2c_chanset.data'
+chanset.save_channels_1c(fuz)
 
 chanset.check_in_stage_limits()
 # Exits with error if some points are
@@ -172,7 +186,8 @@ for i in range(n_run):
   ou += ' ; '+schedule[i].strftime(fomb)
   ou += '\n'
 ou += '\n'
-fz = open("z3a_schedule.data",'w')
+fuz = dz_inputs+'e3a_schedule.data'
+fz = open(fuz,'w')
 fz.write(ou);  fz.close()
 
 def uc_green(s):
