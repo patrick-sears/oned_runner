@@ -18,7 +18,7 @@ class c_camera:
     self.im_save_dir = im_save_dir
     #
   def init_serial(self):
-    if self.run_mode != 'serial':
+    if self.run_mode != 'hardware':
       print("c_camera:  Simulated init_serial().")
       return
     #
@@ -45,7 +45,7 @@ class c_camera:
     self.cama.Attach(factory.CreateFirstDevice())
     #
   def take_image(self, imi):
-    if self.run_mode != 'serial':
+    if self.run_mode != 'hardware':
       # print("c_camera:  Simulated init.")
       ### # -----------------------
       ### # Used for testing during initial development.

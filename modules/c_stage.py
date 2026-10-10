@@ -91,7 +91,7 @@ class c_stage:
     #
     #
   def init_serial(self):
-    if self.run_mode != 'serial':
+    if self.run_mode != 'hardware':
       print("c_stage:  Simulated init.")
       return
     #
@@ -112,7 +112,7 @@ class c_stage:
       sys.exit(1)
     #
   def cbuf(self):
-    if self.run_mode != 'serial':
+    if self.run_mode != 'hardware':
       print("c_stage:  Simulated cbuf().")
       return
     # Clear buffer.
@@ -130,7 +130,7 @@ class c_stage:
     return ux,uy,uz
   def sread_stage_xyz(self):
     # sread:  serial read.
-    if self.run_mode != 'serial':
+    if self.run_mode != 'hardware':
       print("c_stage:  Simulated sread_stage_xyz().")
       return 57000,37500,0
     #
@@ -174,7 +174,7 @@ class c_stage:
       print("  file:  c_stage.py")
       print("  func:  go_stage_xyz().")
       sys.exit(1)
-    if self.run_mode != 'serial':
+    if self.run_mode != 'hardware':
       # print("c_stage:  Simulated stage_xyz().")
       return
     #
@@ -200,7 +200,7 @@ class c_stage:
       print("  file:  c_stage.py")
       print("  func:  go_stage_xy().")
       sys.exit(1)
-    if self.run_mode != 'serial':
+    if self.run_mode != 'hardware':
       # print("c_stage:  Simulated go_p3().")
       return
     #
@@ -217,7 +217,7 @@ class c_stage:
     self.seti_wait_for_R()
     #
   def reset_z0_to_current_stage_position(self):
-    if self.run_mode != 'serial':
+    if self.run_mode != 'hardware':
       return
     #
     seri = self.seri

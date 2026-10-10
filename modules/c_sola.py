@@ -30,7 +30,7 @@ class c_sola:
     #
     #
   def init_serial(self):
-    if self.run_mode != 'serial':
+    if self.run_mode != 'hardware':
       print("c_sola:  Simulated init.")
       return
     #
@@ -79,7 +79,7 @@ class c_sola:
     #
     #
   def set_intensity_50(self):
-    if self.run_mode != 'serial':
+    if self.run_mode != 'hardware':
       send = get_hex_str(self.intensity_50)
       print()
       print("sim set_intensity_50()")
@@ -95,7 +95,7 @@ class c_sola:
       sys.exit(1)
     #
   def set_light_off(self):
-    if self.run_mode != 'serial':
+    if self.run_mode != 'hardware':
       send = get_hex_str(self.light_off)
       print("sim set_light_off()")
       print("  Write: ", send)
@@ -112,7 +112,7 @@ class c_sola:
     #
     #
   def set_light_on(self):
-    if self.run_mode != 'serial':
+    if self.run_mode != 'hardware':
       send = get_hex_str(self.light_on)
       print()
       print("sim set_light_on()")

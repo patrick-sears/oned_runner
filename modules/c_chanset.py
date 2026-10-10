@@ -202,7 +202,7 @@ class c_chanset:
     uin = input("  >> ")
     # Don't bother checking.
     fidsx,fidsy,fidsz = self.stage.sread_stage_xyz()
-    if self.run_mode != 'serial':  return
+    if self.run_mode != 'hardware':  return
     #
     fidux = self.fidu_x[0];
     fiduy = self.fidu_y[0];

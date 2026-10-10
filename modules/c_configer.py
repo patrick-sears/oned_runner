@@ -131,7 +131,7 @@ class c_configer:
     #
   def pro1(self):
     rm = self.run_mode
-    if rm != "serial" and rm != "simulation":
+    if rm != "hardware" and rm != "simulation":
       print("Error.  Strange run_mode.")
       print("  run_mode: ", run_mode)
       sys.exit(1)

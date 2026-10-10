@@ -145,7 +145,7 @@ class c_channel:
     uin = input('  >> ')
     if uin == 'x' or uin == 'q':  return 1
     bx, by, bz = self.stage.sread_user_xyz()
-    if self.run_mode == 'serial':
+    if self.run_mode == 'hardware':
       self.pos_bx=bx;
       self.pos_by=by;
       self.pos_bz=bz;
@@ -162,7 +162,7 @@ class c_channel:
     uin = input('  >> ')
     if uin == 'x' or uin == 'q':  return 1
     cx, cy, cz = self.stage.sread_user_xyz()
-    if self.run_mode == 'serial':
+    if self.run_mode == 'hardware':
       self.pos_cx=cx;
       self.pos_cy=cy;
       self.pos_cz=cz;
