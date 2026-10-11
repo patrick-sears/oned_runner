@@ -45,20 +45,17 @@ class c_camera:
     self.cama.Attach(factory.CreateFirstDevice())
     #
   def take_image(self, imi):
-    if self.run_mode != 'hardware':
-      # print("c_camera:  Simulated init.")
-      ### # -----------------------
-      ### # Used for testing during initial development.
-      ### # No longer needed.
-      ### imfuz = self.im_save_dir
-      ### imfuz += '/im{:04d}.data'.format(imi)
-      ### ou = 'Image {:04d}\n'.format(imi)
-      ### with open(imfuz,'w') as f: f.write(ou)
-      ### # -----------------------
-      return
-    #
     imfuz = self.im_save_dir
     imfuz += '/im{:04d}.png'.format(imi)
+    #
+    if self.run_mode != 'hardware':
+      # -----------------------
+      imfuz = self.im_save_dir
+      imfuz += '/im{:04d}.data'.format(imi)
+      ou = 'Image {:04d}\n'.format(imi)
+      with open(imfuz,'w') as f: f.write(ou)
+      # -----------------------
+      return
     #
     # Shouldn't this go in init_serial()?
     cama = self.cama
