@@ -169,7 +169,7 @@ class c_channel:
     #
     return 0
     #
-  def go_run(self, imi):
+  def go_run(self, oudir):
     #
     for i in range(self.n_im):
       print('.',end='',flush=True)
@@ -185,17 +185,20 @@ class c_channel:
       # 1.  Prior:   Move the stage.
       self.stage.go_user_xyz(posx,posy,posz)
       #
-      # 2.  Basler:  Take the image and save.
-      # AF.  Keep track of image index and
-      #      pass it to "take_image".
-      #      We need to keep track of it at
-      #      a high level to save in a log file.
-      self.camera.take_image(imi)
+      # imfuz = oudir+'im{:04d}'.format(imi)
+      imfuz = oudir+'im{:04d}'.format(i)
+      if self.run_mode == 'hardware':
+        imfuz += '.png'
+      else:
+        imfuz += '.data'
+      # self.camera.take_image(imi)
+      print("DDD:  ", imfuz)
+      self.camera.take_image(imfuz)
       #
-      imi += 1
+      # imi += 1
       #
     print()
-    return imi
+    # return imi
     #
   def gou_1b(self):
     ou = ''

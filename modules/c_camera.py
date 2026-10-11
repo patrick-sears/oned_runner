@@ -44,15 +44,17 @@ class c_camera:
     self.cama = pylon.InstantCamera()
     self.cama.Attach(factory.CreateFirstDevice())
     #
-  def take_image(self, imi):
-    imfuz = self.im_save_dir
-    imfuz += '/im{:04d}.png'.format(imi)
+  # def take_image(self, imi):
+  def take_image(self, imfuz):
+    # imfuz = self.im_save_dir
+    # imfuz += '/im{:04d}.png'.format(imi)
     #
     if self.run_mode != 'hardware':
       # -----------------------
-      imfuz = self.im_save_dir
-      imfuz += '/im{:04d}.data'.format(imi)
-      ou = 'Image {:04d}\n'.format(imi)
+      # imfuz = self.im_save_dir
+      # imfuz += '/im{:04d}.data'.format(imi)
+      # ou = 'Image {:04d}\n'.format(imi)
+      ou = imfuz+'\n'
       with open(imfuz,'w') as f: f.write(ou)
       # -----------------------
       return

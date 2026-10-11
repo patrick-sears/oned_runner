@@ -145,11 +145,12 @@ chanset.check_in_stage_limits()
 
 sched_tdx = cc.schedule_tdx
 sched_tdo = cc.schedule_tdo
-n_run = len(sched_tdo)
+n_pass = len(sched_tdo)
 
 runner = c_runner()
 runner.set_cc(cc)
 runner.set_rlog(rlog)
+runner.set_im_save_dir(dz_images)
 runner.set_sola(sola) # sola seria
 runner.set_rchan(rchan)
 
@@ -165,7 +166,7 @@ if uin != '':
 
 schedule = []
 now = datetime.now()
-for i in range(n_run):
+for i in range(n_pass):
   schedule.append(now + sched_tdo[i])
 
 
@@ -179,7 +180,7 @@ ou = ''
 ou += '#\n'
 ou += '!schedule\n'
 ou += '# run ; dt (s)  ; t from start    ; start time\n'
-for i in range(n_run):
+for i in range(n_pass):
   ou += '{:5d}'.format(i)
   ou += ' ; {:6d}'.format( sched_tdx[i] )
   ou += ' ; '+timedelta_str( sched_tdo[i] )
@@ -197,7 +198,7 @@ def uc_green(s):
 
 waiting_mark = uc_green('====================================')
 
-i_run = 0
+i_pass = 0
 nex_t = schedule[0]
 show_header = True
 try:
@@ -209,7 +210,7 @@ try:
     if show_header:
       print()
       print(waiting_mark)
-      print("Waiting to start run ", i_run, "...")
+      print("Waiting to start run ", i_pass, "...")
       print("  Next run: ", nex_t.strftime(fomb))
       show_header = False
     #
@@ -218,13 +219,13 @@ try:
       time.sleep(0.1)
       continue
     #
-    runner.go_run(i_run, now)
+    runner.go_run(i_pass, now)
     #
     # Prep for next run.
     show_header = True
-    i_run += 1
-    if i_run == n_run:  break
-    else:               nex_t = schedule[i_run]
+    i_pass += 1
+    if i_pass == n_pass:  break
+    else:               nex_t = schedule[i_pass]
     #
   #
   #
