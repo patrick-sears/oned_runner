@@ -12,6 +12,8 @@ class c_runner:
     self.cc = cc
   def set_rlog(self, rlog):
     self.rlog = rlog
+  def set_ilog(self, ilog):
+    self.ilog = ilog
   def set_im_save_dir(self, im_save_dir):
     self.im_save_dir = im_save_dir
   def set_rchan(self, rchan):
@@ -31,6 +33,13 @@ class c_runner:
     print("  ",run_stime.strftime(fomb))
     oulog = '!pass_start ; '+str(i_pass)+'\n'
     self.rlog.add(oulog)
+    ouilog = '\n'
+    ouilog += '# ___________________________\n'
+    ouilog += '!pass_start ; '+str(i_pass)
+    ouilog += " ; "+run_stime.strftime(fomb)
+    ouilog += '\n'
+    self.ilog.add(ouilog)
+    self.ilog.save()
     #
     # Sola:  Turn on ex light.
     self.sola.set_light_on()

@@ -101,6 +101,7 @@ class c_camera:
     #
     cama.Close()
     #
+    #
 
 
 

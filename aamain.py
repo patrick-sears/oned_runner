@@ -9,6 +9,7 @@ from modules.c_channel import *
 from modules.c_chanset import *
 from modules.c_runner import *
 from modules.c_run_log import *
+from modules.c_im_log import *
 
 
 import sys, os, shutil
@@ -39,6 +40,13 @@ shutil.copyfile(config_fname,dz_inputs+'config')
 
 rlog = c_run_log()
 rlog.set_dz_run(dz_run)
+rlog.add('#\n')
+rlog.save()
+
+ilog = c_im_log()
+ilog.set_dz_run(dz_run)
+ilog.add('#\n')
+ilog.save()
 
 
 sola = c_sola()
@@ -100,6 +108,7 @@ for i in range(n_rchan):
 
 for i in range(n_rchan):
   rchan[i].set_rlog(rlog)
+  rchan[i].set_ilog(ilog)
   rchan[i].set_stage(stage) # Prior stage
   rchan[i].set_camera(camera) # Basler camera
 
@@ -150,6 +159,7 @@ n_pass = len(sched_tdo)
 runner = c_runner()
 runner.set_cc(cc)
 runner.set_rlog(rlog)
+runner.set_ilog(ilog)
 runner.set_im_save_dir(dz_images)
 runner.set_sola(sola) # sola seria
 runner.set_rchan(rchan)

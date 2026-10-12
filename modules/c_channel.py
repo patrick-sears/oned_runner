@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from math import hypot
+from datetime import datetime
 
 class c_channel:
   def __init__(self):
@@ -16,6 +17,8 @@ class c_channel:
     self.run_mode = run_mode
   def set_rlog(self, rlog):
     self.rlog = rlog
+  def set_ilog(self, ilog):
+    self.ilog = ilog
   def set_order_i(self, order_i):
     self.order_i = order_i
   def set_m_start(self, m_start):
@@ -171,6 +174,18 @@ class c_channel:
     #
   def go_run(self, oudir):
     #
+    fomb = "%Y-%m-%d %a %H:%M:%S"
+    chan_start = datetime.now()
+    ouilog = '\n'
+    ouilog += '# __________\n'
+    ouilog += '!rchan_start'
+    ouilog += ' ; {:3d}'.format(self.chani)
+    ouilog += " ; "+chan_start.strftime(fomb)
+    ouilog += '\n'
+    self.ilog.add(ouilog)
+    self.ilog.save()
+    #
+    ouilog = ''
     for i in range(self.n_im):
       print('.',end='',flush=True)
       posx = self.im_pos_x[i]
@@ -192,13 +207,26 @@ class c_channel:
       else:
         imfuz += '.data'
       # self.camera.take_image(imi)
-      print("DDD:  ", imfuz)
       self.camera.take_image(imfuz)
       #
-      # imi += 1
+      im_time = datetime.now()
+      ouilog += '!im'
+      ouilog += ' ; {:3d}'.format(i)
+      ouilog += " ; "+im_time.strftime(fomb)
+      ouilog += '\n'
       #
     print()
-    # return imi
+    self.ilog.add(ouilog)
+    self.ilog.save()
+    #
+    fomb = "%Y-%m-%d %a %H:%M:%S"
+    chan_end = datetime.now()
+    ouilog = '!rchan_end'
+    ouilog += ' ; {:3d}'.format(self.chani)
+    ouilog += " ; "+chan_end.strftime(fomb)
+    ouilog += '\n'
+    self.ilog.add(ouilog)
+    self.ilog.save()
     #
   def gou_1b(self):
     ou = ''
