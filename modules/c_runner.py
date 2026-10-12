@@ -31,11 +31,14 @@ class c_runner:
     fomb = "%Y-%m-%d %a %H:%M:%S"
     print("Starting pass ", i_pass)
     print("  ",run_stime.strftime(fomb))
-    oulog = '!pass_start ; '+str(i_pass)+'\n'
-    self.rlog.add(oulog)
+    ourlog = '!pass_start ; '+str(i_pass)+'\n'
+    self.rlog.add(ourlog)
+    #
     ouilog = '\n'
-    ouilog += '# ___________________________\n'
-    ouilog += '!pass_start ; '+str(i_pass)
+    ouilog += '# _______________________________________\n'
+    ouilog += '# -         ; ip ; time\n'
+    ouilog += '!pass_start'
+    ouilog += ' ; {:2d}'.format(i_pass)
     ouilog += " ; "+run_stime.strftime(fomb)
     ouilog += '\n'
     self.ilog.add(ouilog)
@@ -56,15 +59,26 @@ class c_runner:
       chani = rchan[i].chani
       print("Running channel ", chani)
       # imi = rchan[i].go_run(imi)
-      rchan[i].go_run(oudir[i])
+      rchan[i].go_run(oudir[i], i_pass)
     #
     # Sola:  Turn off ex light.
     self.sola.set_light_off()
     #
     self.imi = imi
     #
-    oulog = '!pass_end ; '+str(i_pass)+'\n'
-    self.rlog.add(oulog)
+    pass_end = datetime.now()
+    ouilog = ''
+    ouilog += '\n'
+    ouilog += '# -       ; ip ; time\n'
+    ouilog += '!pass_end'
+    ouilog += ' ; {:2d}'.format(i_pass)
+    ouilog += " ; "+pass_end.strftime(fomb)
+    ouilog += '\n'
+    self.ilog.add(ouilog)
+    self.ilog.save()
+    #
+    ourlog = '!pass_end ; '+str(i_pass)+'\n'
+    self.rlog.add(ourlog)
     self.rlog.save()
     #
 

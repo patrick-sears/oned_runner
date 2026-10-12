@@ -9,7 +9,6 @@ class c_channel:
     self.m_start  = None
     self.csa_x1 = None
     self.is_runner = False
-    pass
     #
   def set_is_runner(self, is_runner):
     self.is_runner = is_runner
@@ -172,13 +171,15 @@ class c_channel:
     #
     return 0
     #
-  def go_run(self, oudir):
+  def go_run(self, oudir, i_pass):
     #
     fomb = "%Y-%m-%d %a %H:%M:%S"
     chan_start = datetime.now()
     ouilog = '\n'
     ouilog += '# __________\n'
+    ouilog += '# -          ; ir  ; ic  ; time\n'
     ouilog += '!rchan_start'
+    ouilog += ' ; {:3d}'.format(self.order_i)
     ouilog += ' ; {:3d}'.format(self.chani)
     ouilog += " ; "+chan_start.strftime(fomb)
     ouilog += '\n'
@@ -186,6 +187,7 @@ class c_channel:
     self.ilog.save()
     #
     ouilog = ''
+    ouilog += '# - ; ip  ; ir  ; iim ; time\n'
     for i in range(self.n_im):
       print('.',end='',flush=True)
       posx = self.im_pos_x[i]
@@ -200,7 +202,6 @@ class c_channel:
       # 1.  Prior:   Move the stage.
       self.stage.go_user_xyz(posx,posy,posz)
       #
-      # imfuz = oudir+'im{:04d}'.format(imi)
       imfuz = oudir+'im{:04d}'.format(i)
       if self.run_mode == 'hardware':
         imfuz += '.png'
@@ -211,6 +212,8 @@ class c_channel:
       #
       im_time = datetime.now()
       ouilog += '!im'
+      ouilog += ' ; {:3d}'.format( i_pass )
+      ouilog += ' ; {:3d}'.format( self.order_i )
       ouilog += ' ; {:3d}'.format(i)
       ouilog += " ; "+im_time.strftime(fomb)
       ouilog += '\n'
@@ -221,7 +224,9 @@ class c_channel:
     #
     fomb = "%Y-%m-%d %a %H:%M:%S"
     chan_end = datetime.now()
-    ouilog = '!rchan_end'
+    ouilog = ''
+    ouilog += '# -        ; ir  ; time\n'
+    ouilog += '!rchan_end'
     ouilog += ' ; {:3d}'.format(self.chani)
     ouilog += " ; "+chan_end.strftime(fomb)
     ouilog += '\n'

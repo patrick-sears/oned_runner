@@ -45,7 +45,13 @@ rlog.save()
 
 ilog = c_im_log()
 ilog.set_dz_run(dz_run)
-ilog.add('#\n')
+ouilog = ''
+ouilog += '#\n'
+ouilog += '# ip:  i_pass\n'
+ouilog += '# ir:  i_rchan, run order.\n'
+ouilog += '# ic:  i_chan, order in chanset file.\n'
+ouilog += '# iim: i_image\n'
+ilog.add(ouilog)
 ilog.save()
 
 
