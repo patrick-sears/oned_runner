@@ -191,7 +191,7 @@ class c_channel:
     self.ilog.save()
     #
     ouilog = ''
-    ouilog += '# - ; ip  ; ir  ; iim ; time                ; pos-L  ; pos-x  ; pos-y  ; pos-z\n'
+    ouilog += '# - ; ip  ; ir  ; iim ; time                ; pos-L    ; pos-x    ; pos-y    ; pos-z\n'
     for i in range(self.n_im):
       print('.',end='',flush=True)
       posx = self.im_pos_x[i]
