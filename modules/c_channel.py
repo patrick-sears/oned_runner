@@ -109,13 +109,16 @@ class c_channel:
     self.im_pos_x = []
     self.im_pos_y = []
     self.im_pos_z = []
+    self.im_pos_L = []
     for i in range(self.n_im):
       x = start_x + step_dx * i
       y = start_y + step_dy * i
       z = start_z + step_dz * i
+      L = m_start + i * dL_step
       self.im_pos_x.append(x)
       self.im_pos_y.append(y)
       self.im_pos_z.append(z)
+      self.im_pos_L.append(L)
     #
     #
   def get_stage_coords_xy(self, ux,uy):
@@ -174,6 +177,7 @@ class c_channel:
   def go_run(self, oudir, i_pass):
     #
     fomb = "%Y-%m-%d %a %H:%M:%S"
+    fomc = "%Y-%m-%d %H:%M:%S"
     chan_start = datetime.now()
     ouilog = '\n'
     ouilog += '# __________\n'
@@ -187,12 +191,13 @@ class c_channel:
     self.ilog.save()
     #
     ouilog = ''
-    ouilog += '# - ; ip  ; ir  ; iim ; time\n'
+    ouilog += '# - ; ip  ; ir  ; iim ; time                ; pos-L  ; pos-x  ; pos-y  ; pos-z\n'
     for i in range(self.n_im):
       print('.',end='',flush=True)
       posx = self.im_pos_x[i]
       posy = self.im_pos_y[i]
       posz = self.im_pos_z[i]
+      pos_L = self.im_pos_L[i]
       #
       # AF:
       # We need to get the actual time
@@ -210,12 +215,17 @@ class c_channel:
       # self.camera.take_image(imi)
       self.camera.take_image(imfuz)
       #
+      #
       im_time = datetime.now()
       ouilog += '!im'
       ouilog += ' ; {:3d}'.format( i_pass )
       ouilog += ' ; {:3d}'.format( self.order_i )
       ouilog += ' ; {:3d}'.format(i)
-      ouilog += " ; "+im_time.strftime(fomb)
+      ouilog += " ; "+im_time.strftime(fomc)
+      ouilog += ' ; {:8.4f}'.format(pos_L)
+      ouilog += ' ; {:8.4f}'.format(posx)
+      ouilog += ' ; {:8.4f}'.format(posy)
+      ouilog += ' ; {:8.4f}'.format(posz)
       ouilog += '\n'
       #
     print()
