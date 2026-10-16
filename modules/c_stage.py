@@ -189,7 +189,7 @@ class c_stage:
     #
     # It should return 'R' when the stage
     # has physically stopped moving.
-    self.seti_wait_for_R()
+    self.seri_wait_for_R()
     #
   def go_user_xy(self, ux, uy):
     sx,sy,sz = self.get_stage_coords(ux,uy,0)
@@ -214,7 +214,7 @@ class c_stage:
     #
     # It should return 'R' when the stage
     # has physically stopped moving.
-    self.seti_wait_for_R()
+    self.seri_wait_for_R()
     #
   def reset_z0_to_current_stage_position(self):
     if self.run_mode != 'hardware':
